@@ -1,0 +1,10 @@
+# скомпилированиые фалы python
+mysite/*.pyc
+article/*.pyc
+article/__init__.py
+mysite/*.pyc
+mysite/__init__.py
+article/migrations/*.pyc
+article/migrations/__init__.py
+
+.idea/
