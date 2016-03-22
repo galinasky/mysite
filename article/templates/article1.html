@@ -1,6 +1,7 @@
 {% extends 'main.html' %}
 {% load staticfiles %}
 {% block article %}
+<h4><a href="/articles/page/{{ page_number }}/" >назад</a></h4>
 <h4>дата: {{ article.Article_date }}</h4>
 <h2>заголовок: {{ article.Article_title }}</h2>
 <p>{{ article.Article_text }}</p>
@@ -12,10 +13,13 @@
 <br>
 {% endfor %}
 <hr>
-    <form action="/articles/addcomment/{{article.id}}/" method="post">
+    {% if username%}
+    <form action="/articles/addcomment/{{ page_number }}/{{article.id}}/" method="post">
         {% csrf_token %}
         {{ form }}
         <input type="submit" class="button" value="отправить комментарий">
     </form>
+    {% endif %}
+    #форма добавления коментариев добавиться только к авторизированому пользователю
 </div>
 {% endblock %}
