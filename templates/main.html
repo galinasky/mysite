@@ -4,25 +4,35 @@
 <head>
     <meta charset="UTF-8">
     <title>mysite</title>
-    <link rel="stylesheet" href="{% static '/static/css/foundation.css' %}">
+    <!--<link rel="stylesheet" href="{% static '/static/css/foundation.css' %}">-->
+    <link rel="stylesheet" href="{% static '/static/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static '/static/css/bootstrap-theme.css' %}">
+    <link rel="stylesheet" href="{% static '/static/css/font-awesome.css' %}">
 </head>
 <body>
-<div class="top-bar">
-<section class="top-bar-section">
-<ul class="top-bar-right">
-    {% if username %}
-    <li><a href="/auth/logout/">Выйти ({{ username }})</a></li>
-    {% else %}
-    <li><a href="/auth/login/">Войти</a></li>
-    {% endif %}
-</ul>
-</section>
+<div class="navbar navbar-inverse navbar-static-top">
+    <div class="container">
+        <div class="collaps navbar-collaps pull-right">
+            <ul  class="nav navbar-nav">
+            <li><a href="/admin/"  class="btn">администратор</a>  </li>
+            {% if username %}
+            <li><a href="/auth/logout/" class="btn">Выйти ({{ username }})</a></li>
+            {% else %}
+            <li><a href="/auth/login/"  class="btn">Войти</a></li>
+            {% endif %}
+            </ul>
+    </div>
 </div>
+</div>
+
 <h1><a href="/articles/page/1/">мой блог</a></h1>
-<div class="row">
+<div class="container">
 {% block article %}{% endblock %}
 {% block login %}{% endblock %}
 </div>
-
+<h3><a href="/start/">my</a></h3>
+<script src="/static/js/bootstrap.js"></script>
+<script src="/static/js/npm.js"></script>
+<script src="/static/js/ext-all.js"></script>
 </body>
 </html>

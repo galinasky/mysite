@@ -1,43 +1,58 @@
 {% extends 'main.html' %}
 {% load staticfiles %}
 {% block article %}
-<div class="large-8" >
-    {% for article in articles %}
-    <h6>дата публикации статьи: {{ article.Article_date }}</h6>
-    <h4><a href="/articles/{{ articles.number }}/{{article.id}}/" >{{ article.Article_title }}</a></h4>
-    <p>{{ article.Article_text }}</p>
-    <p>{% if username%}
-        <a href="/articles/addlike/{{ articles.number }}/{{article.id}}/"><img src='{% static "like.png"%}' width="25px" height="25px"></a>
-        {% else %}
-        <img src='{% static "like.png"%}' width="25px" height="25px">
-        {% endif %}
-        понравилось {{ article.Article_like }}</p>
+<div class="container">
+<!--<div class="large-8" >-->
+    <div class="row">
+        {% for article in articles %}
+        <h6>дата публикации статьи: {{ article.Article_date }}</h6>
+        <h4><a href="{% url 'article' page_number=articles.number Article_id=article.id %}" >{{ article.Article_title }}</a></h4>
+        <p>{{ article.Article_text }}</p>
+        <p>{% if username%}
+            <a href="{% url 'addlike' page_number=articles.number Article_id=article.id %}"><img src='{% static "media\glyphicons-344-thumbs-up.png"%}' width="20px" height="20px"></a>
+            <a href="{% url 'minlike' page_number=articles.number Article_id=article.id %}"><img src='{% static "media\glyphicons-345-thumbs-down.png"%}' width="20px" height="20px"></a>
+            {% else %}
+            <img src='{% static "media\glyphicons-344-thumbs-up.png"%}' width="20px" height="20px">
+            <img src='{% static "media\glyphicons-345-thumbs-down.png"%}' width="20px" height="20px">
+            {% endif %}
+            {{ article.Article_like }}</p>
 
-    <hr>
-    {% endfor %}
-</div>
-<div class="row">
-    <div class="large-3 large-offset-5 columns">
-        <ul class="pagination">
-            {% if articles.has_previous %}
-            <li class="arrow"><a href="/articles/page/{{ articles.previous_page_number }}/">&laquo;</a></li>
-            {% else %}
-            <li class="arrow unavailable"><a href="">&laquo;</a></li>
-            {% endif %}
-            {% for page in articles.paginator.page_range %}
-            {% if page == articles.number %}
-            <li class="current"><a href="/articles/page/{{ page }}/">{{ page }}</a></li>
-            {% else %}
-            <li><a href="/articles/page/{{ page }}/">{{ page }}</a></li>
-            {% endif %}
-            {% endfor%}
-            {% if articles.has_next %}
-            <li class="arrow"><a href="/articles/page/{{ articles.next_page_number }}/">&raquo;</a></li>
-            {% else %}
-            <li class="arrow unavailable"><a href="">&raquo;</a></li>
-            {% endif %}
-        </ul>
+        <hr>
+        {% endfor %}
+    </div>
+    <div class="row">
+        <!--<div class="large-3 large-offset-5 columns">-->
+        <div class="col-lg-7 col-lg-offset-5 col-md-7 col-md-offset-5 col-sm-7 col-sm-offset-5 col-xs-7 col-xs-offset-5">
+            <ul class="pagination">
+                {% if articles.has_previous %}
+                <li><a href="/articles/page/1/" class="btn btn-info">&laquo;&laquo;</a></li>
+                {% else %}
+                <li><a href="#" class="btn btn-info  disabled">&laquo;&laquo;</a></li>
+                {% endif %}
+                {% if articles.has_previous %}
+                <li><a href="/articles/page/{{ articles.previous_page_number }}/" class="btn btn-info">&laquo;</a></li>
+                {% else %}
+                <li><a href="" class="btn btn-info disabled">&laquo;</a></li>
+                {% endif %}
+                {% for page in articles.paginator.page_range %}
+                {% if page == articles.number %}
+                <li><a href="/articles/page/{{ page }}/" class="btn disabled">{{ page }}</a></li>
+                {% else %}
+                <li><a href="/articles/page/{{ page }}/" class="btn">{{ page }}</a></li>
+                {% endif %}
+                {% endfor%}
+                {% if articles.has_next %}
+                <li><a href="/articles/page/{{ articles.next_page_number }}/" class="btn btn-info">&raquo;</a></li>
+                {% else %}
+                <li><a href="" class="btn btn-info disabled">&raquo;</a></li>
+                {% endif %}
+                {% if articles.has_next %}
+                <li><a href="/articles/page/{{ articles.Paginator.num_pages }}/" class="btn btn-info">&raquo;&raquo;</a></li>
+                {% else %}
+                <li><a href="#" class="btn btn-info disabled">&raquo;&raquo;</a></li>
+                {% endif %}
+            </ul>
+        </div>
     </div>
 </div>
-
 {% endblock %}

@@ -62,6 +62,19 @@ def addlike(request, page_number, Article_id):
     except ObjectDoesNotExist:
         raise Http404
     return redirect('/articles/page/%s/'% page_number)
+def minlike(request, page_number, Article_id):
+    try:
+        article = Article.objects.get(id=Article_id)
+        article.Article_like -= 1
+        article.save()
+        #<--для куки файлов, учебное не использовать!!!
+        #response = redirect('articles/')
+        #response.set_cookie(Article_id, 'test')
+        #return response
+        #для куки файлов, учебное не использовать!!!-->
+    except ObjectDoesNotExist:
+        raise Http404
+    return redirect('/articles/page/%s/'% page_number)
 
 def addcomment(request, page_number, Article_id):
     if request.POST and ('pause' not in request.session):

@@ -6,20 +6,24 @@
 <h2>заголовок: {{ article.Article_title }}</h2>
 <p>{{ article.Article_text }}</p>
 <hr>
-<div class="large-offset-1 large-9 columns">
+<div class="row">
+<!--<div class="large-offset-1 large-9 columns">-->
+    <div class="col-lg-8 col-lg-offset-4 col-md-8 col-md-offset-4 col-sm-8 col-sm-offset-4 col-xs-8 col-xs-offset-4">
 <p>комментарии</p>
 {% for comment in comments %}
 {{ comment.Comments_text }}
 <br>
 {% endfor %}
 <hr>
+
     {% if username%}
-    <form action="/articles/addcomment/{{ page_number }}/{{article.id}}/" method="post">
+    <form action="{% url 'addcomment' page_number=page_number Article_id=article.id %}" method="post">
         {% csrf_token %}
         {{ form }}
         <input type="submit" class="button" value="отправить комментарий">
     </form>
     {% endif %}
-    #форма добавления коментариев добавиться только к авторизированому пользователю
+    <!--форма добавления коментариев добавиться только к авторизированому пользователю-->
+</div>
 </div>
 {% endblock %}
